@@ -1,0 +1,26 @@
+{
+  "name": "experiment-electron",
+  "version": "1.0.0",
+  "description": "A modern Electron application for macOS",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "NODE_ENV=development electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://local_proxy@127.0.0.1:40170/git/yagodorea/experiment-electron"
+  },
+  "keywords": [
+    "electron",
+    "mac",
+    "desktop",
+    "app"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^39.2.6"
+  }
+}
