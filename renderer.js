@@ -1,17 +1,12 @@
-// This file is loaded by the HTML and runs in the renderer process
-// It has access to the DOM and limited Node.js APIs through the preload script
+// Overlay renderer - displays text received via WebSocket
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Display system information
-  if (window.electron) {
-    document.getElementById('platform').textContent = window.electron.platform;
+  const overlayText = document.getElementById('overlay-text');
+
+  if (window.electron && window.electron.onOverlayText) {
+    window.electron.onOverlayText((text) => {
+      overlayText.textContent = text;
+      overlayText.classList.add('visible');
+    });
   }
-
-  // Display version information
-  document.getElementById('electron-version').textContent = process.versions.electron || 'N/A';
-  document.getElementById('chrome-version').textContent = process.versions.chrome || 'N/A';
-  document.getElementById('node-version').textContent = process.versions.node || 'N/A';
-
-  // Add any additional renderer logic here
-  console.log('Electron app initialized successfully!');
 });

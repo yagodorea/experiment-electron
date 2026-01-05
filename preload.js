@@ -4,7 +4,7 @@ const { contextBridge, ipcRenderer } = require('electron');
 // the ipcRenderer without exposing the entire object
 contextBridge.exposeInMainWorld('electron', {
   platform: process.platform,
-  // Add more APIs here as needed
-  // Example: send: (channel, data) => ipcRenderer.send(channel, data),
-  // Example: receive: (channel, func) => ipcRenderer.on(channel, (event, ...args) => func(...args))
+  onOverlayText: (callback) => {
+    ipcRenderer.on('overlay-text', (event, text) => callback(text));
+  }
 });

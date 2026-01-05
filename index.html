@@ -4,46 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-  <title>Electron Mac App</title>
+  <title>Overlay</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <h1>Welcome to Electron</h1>
-      <p class="subtitle">Your Mac Application is Ready</p>
-    </div>
-
-    <div class="content">
-      <div class="card">
-        <h2>🚀 Getting Started</h2>
-        <p>This is a basic Electron application optimized for macOS.</p>
-        <ul>
-          <li>Native window controls with traffic light buttons</li>
-          <li>Secure context isolation enabled</li>
-          <li>Modern ES6+ JavaScript support</li>
-          <li>Hot reload ready for development</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h2>📦 Project Structure</h2>
-        <ul>
-          <li><code>main.js</code> - Main process (Node.js)</li>
-          <li><code>preload.js</code> - Secure bridge between main and renderer</li>
-          <li><code>index.html</code> - Application UI</li>
-          <li><code>renderer.js</code> - Renderer process logic</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h2>💻 System Info</h2>
-        <p>Platform: <span id="platform">Loading...</span></p>
-        <p>Electron Version: <span id="electron-version">Loading...</span></p>
-        <p>Chrome Version: <span id="chrome-version">Loading...</span></p>
-        <p>Node Version: <span id="node-version">Loading...</span></p>
-      </div>
-    </div>
+  <div class="overlay-container">
+    <div id="overlay-text" class="overlay-text"></div>
   </div>
 
   <script src="renderer.js"></script>
