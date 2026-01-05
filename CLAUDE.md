@@ -4,32 +4,37 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Commands
 
-- `npm start` - Run the Electron app in production mode
-- `npm run dev` - Run with DevTools open (sets NODE_ENV=development)
+- `npm start` - Run the Electron app
 - `npm install` - Install dependencies
 
 ## Architecture
 
-This is a macOS-optimized Electron application following the standard three-process architecture:
+Audio overlay application for macOS with two-window flow:
+
+### Startup Flow
+1. **Setup Window** (`setup.html`, `setup.js`, `setup.css`) - Device selection dialog
+   - Lists available audio input devices
+   - Configures WebSocket URL for audio streaming
+   - Config persisted to `~/Library/Application Support/experiment-electron/config.json`
+
+2. **Overlay Window** (`overlay.html`, `renderer.js`, `styles.css`) - Transparent corner overlay
+   - Always-on-top, click-through, bottom-right corner
+   - Displays text received via WebSocket server (port 8765)
+   - Streams audio as raw PCM (16kHz, mono, Int16) to configured WebSocket
 
 ### Main Process (`main.js`)
-- Creates and manages BrowserWindow instances
-- Handles app lifecycle events (ready, activate, window-all-closed)
-- macOS-specific: Uses `hiddenInset` title bar style with custom traffic light positioning
+- Manages both setup and overlay windows
+- Runs WebSocket server on port 8765 for receiving overlay text
+- Handles config persistence via IPC
 
 ### Preload Script (`preload.js`)
-- Secure bridge between main and renderer processes
-- Uses `contextBridge.exposeInMainWorld()` to expose APIs
-- Currently exposes `window.electron.platform`
+Exposes via `window.electron`:
+- `getConfig()` / `startStreaming()` - Setup page
+- `onOverlayText()` / `onStartAudioCapture()` - Overlay page
 
-### Renderer Process (`renderer.js`, `index.html`, `styles.css`)
-- Runs in sandboxed browser context
-- Accesses Node.js APIs only through preload-exposed interfaces
-- Context isolation and disabled node integration for security
+## Audio Format
 
-## IPC Pattern
-
-To add main-renderer communication:
-1. Expose method in `preload.js` via `contextBridge.exposeInMainWorld()`
-2. Handle in `main.js` with `ipcMain.on()` or `ipcMain.handle()`
-3. Call from renderer via `window.electron.<method>()`
+Streams to WebSocket as binary Int16Array (little-endian):
+- Sample rate: 16000 Hz
+- Channels: 1 (mono)
+- Chunk size: 4096 samples (~256ms)

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+  <title>Audio Setup</title>
+  <link rel="stylesheet" href="setup.css">
+</head>
+<body>
+  <div class="drag-region"></div>
+  <div class="container">
+    <h1>Audio Overlay Setup</h1>
+
+    <div class="form-group">
+      <label for="audio-device">Audio Input Device</label>
+      <select id="audio-device">
+        <option value="">Loading devices...</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="websocket-url">WebSocket URL (for audio streaming)</label>
+      <input type="text" id="websocket-url" placeholder="ws://localhost:8766">
+    </div>
+
+    <button id="start-btn" disabled>Start Streaming</button>
+
+    <p class="info">The overlay will appear in the bottom-right corner and display text received on port 8765.</p>
+  </div>
+
+  <script src="setup.js"></script>
+</body>
+</html>
